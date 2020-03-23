@@ -1,1 +1,76 @@
-<p>profile works!</p>
+<!-- Navigation Bar -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark default-color">
+      <a class="navbar-brand" href="#"><strong>Profile</strong></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#"> Hello {{userName}}!</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" (click)="logOut()"> Logout <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content --> 
+<main class="text-center my-5">
+    <div class="container">
+      <h2>My Profile</h2>
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <div class="md-form mt-0">
+            <mdb-icon *ngIf="showPhoto" fas icon="upload" (click)="editPhoto()" size="2x" class="upload-icon"></mdb-icon>
+            <!-- Display Image -->
+            <amplify-s3-image [path]="user.imageUrl" 
+              [options]="{'level': 'private'}" *ngIf="showPhoto">
+            </amplify-s3-image>
+            
+            <!-- Photo Picker -->
+            <amplify-photo-picker *ngIf="!showPhoto" 
+             path="image"[storageOptions]="{'level': 'private'}" (uploaded)="onImageUploaded($event)">
+             </amplify-photo-picker>
+          </div>
+        </div>
+      </div>
+
+      <form>
+        <div class="form-group row">
+          <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+          <div class="col-sm-10">
+            <div class="md-form mt-0">
+              <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+          <div class="col-sm-10">
+            <div class="md-form mt-0">
+              <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="aboutMe" class="col-sm-2 col-form-label">About Me</label>
+          <div class="col-sm-10">
+            <div class="md-form mt-0">
+              <textarea id="aboutMe" name="aboutMe" [(ngModel)]="user.aboutMe" class="form-control md-textarea" length="120"
+                rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary btn-lg" (click)="updateProfile()">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>

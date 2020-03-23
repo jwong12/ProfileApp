@@ -23,5 +23,11 @@
 				}
 			}
 		}
+	},
+	"storage": {
+		"s32225a10a": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
 	}
 }

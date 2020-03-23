@@ -1,0 +1,43 @@
+// .gqlconfig (with query)
+{
+  schema: {
+    files: 'schema/**/*.gql',
+  },
+  query: {
+    files: [
+      // query gql files
+      {
+        match: 'path/to/files/**/*.gql',
+        parser: 'QueryParser',
+      },
+      // [Embedded queries] relay files
+      {
+        match: { include: 'path/to/code/**/*.js', ignore: '**/tests/**/*.js' },
+        parser: [ 'EmbeddedQueryParser', { startTag: 'Relay\\.QL`', endTag: '`' } ],
+        isRelay: true,
+      },
+      // [Embedded queries] gql tag files
+      {
+        match: { include: 'path/to/code/**/*.js', ignore: '**/tests/**/*.js' },
+        parser: [ 'EmbeddedQueryParser', { startTag: 'gql`', endTag: '`' } ],
+      },
+      // [Embedded queries] some other tags
+      {
+        match: 'path/to/code/**/*.xyz',
+        parser: [ 'EmbeddedQueryParser', { startTag: '"""' endTag: '"""' } ],
+      },
+      // [Embedded queries] some other tags and modify validation rules
+      {
+        match: 'path/to/code/**/*.xyz',
+        parser: [ 'EmbeddedQueryParser', { startTag: '"""' endTag: '"""' } ],
+        validate: {
+          extends: 'gql-rules-query',
+          rules: {
+            LoneAnonymousOperation: 'off',
+            NoUnusedVariables: 'warn',
+          },
+        }
+      },
+    ]
+  }
+}
