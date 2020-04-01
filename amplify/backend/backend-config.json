@@ -28,6 +28,10 @@
 		"s32225a10a": {
 			"service": "S3",
 			"providerPlugin": "awscloudformation"
+		},
+		"profileAppS3Xubuntu": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }
